@@ -14,15 +14,18 @@ var snakesection = []; //array of sprites that make the snake body sections
 var snakePath = [];
 var oldPath = []; //arrary of positions(points) that have to be stored for the path the sections follow
 var numSnakeSections = 5; //number of snake body sections
-var snakeSpacer = 8; //parameter that sets the spacing between sections
+var snakeSpacer = 6; //parameter that sets the spacing between sections
 var foods = []
 
 function create() {
-	land = game.add.tileSprite(0, 0, 800, 600, 'earth');
+	land = game.add.tileSprite(0, 0, 4000, 4000, 'earth');
+
+	game.world.setBounds(0, 0, 4000, 4000);
 
 	snakeHead = game.add.sprite(400, 300, 'ball');
 	snakeHead.anchor.setTo(0.5, 0.5);
 	game.physics.enable(snakeHead, Phaser.Physics.ARCADE);
+	snakeHead.body.collideWorldBounds = true;
 
 	cursors = game.input.keyboard.createCursorKeys();
 
@@ -46,6 +49,8 @@ function create() {
     for (var i = 0; i < 50; i++) {
         createfood();
     }
+
+    game.camera.follow(snakeHead);
 }
 
 function update() {
@@ -65,7 +70,7 @@ function update() {
 function move(){
 
 	//ahead
-	snakeHead.body.velocity.copyFrom(game.physics.arcade.velocityFromAngle(snakeHead.angle, 150));
+	snakeHead.body.velocity.copyFrom(game.physics.arcade.velocityFromAngle(snakeHead.angle, 200));
 
 	//body copy
 	oldPath.unshift(snakePath.pop());
@@ -83,7 +88,7 @@ function move(){
 }
 
 function createfood() {
-	var food = foods.create(Math.random() * 800, Math.random() * 600, 'bullet');
+	var food = foods.create(Math.random() * 4000, Math.random() * 4000, 'bullet');
 	food.body.bounce.y = Math.random();
 	food.body.bounce.x = Math.random();
 }
