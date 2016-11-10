@@ -15,8 +15,19 @@ function create() {
 	land = game.add.tileSprite(0, 0, 800, 600, 'earth');
 
 	snakeHead = game.add.sprite(400, 300, 'ball');
+	game.physics.enable(snakeHead, Phaser.Physics.ARCADE);
+
 }
 
 function update() {
+	move();
+}
+
+function move(){
+
+	//change way
+	snakeHead.rotation = game.physics.arcade.angleToPointer(snakeHead)
+	//ahead
+	snakeHead.body.velocity.copyFrom(game.physics.arcade.velocityFromAngle(snakeHead.angle, 150));
 
 }
